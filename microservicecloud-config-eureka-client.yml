@@ -1,0 +1,48 @@
+spring:
+  profiles:
+    active:
+    - dev
+
+---
+
+server:
+  port: 7001
+  
+spring:
+  profiles: dev
+  application:
+    name: microservicecloud-config-eureka-client
+
+eureka: 
+  instance:
+    hostname: eureka7001.com  #ureka服务端实例名称，使用域名映射到localhost，在hosts文件中配置
+  client:
+    register-with-eureka: false #表示自己不向注册中心注册自己     不需要将自己注册到注册中心
+    fetch-registry: false #表示自己就是注册中心，职责就是维护服务实例，不需要检索服务   不需要检索管理自己的服务
+    service-url:
+      # 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址（单机版） 外部服务和eureka通信的地址
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    peer-node-read-timeout-ms: 2000
+
+---
+
+server:
+  port: 7002
+  
+spring:
+  profiles: test
+  application:
+    name: microservicecloud-config-eureka-client
+
+eureka: 
+  instance:
+    hostname: eureka7002.com  #eureka服务端实例名称，使用域名映射到localhost，在hosts文件中配置
+  client:
+    register-with-eureka: false #表示自己不向注册中心注册自己     不需要将自己注册到注册中心
+    fetch-registry: false #表示自己就是注册中心，职责就是维护服务实例，不需要检索服务   不需要检索管理自己的服务
+    service-url:
+      # 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址（单机版） 外部服务和eureka通信的地址
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    peer-node-read-timeout-ms: 2000
